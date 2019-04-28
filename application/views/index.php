@@ -35,18 +35,18 @@ $cateId = $this->input->get('categoryId');
             echo ' <li class="cate ' . $class . '"><a href="/">ALL</a></li>';
             foreach ($categories as $category) {
                 $class = $category->category_id === $cateId ? "active" : "";
-                echo '<li class="cate ' . $class . '" data-id="'.$category->category_id.'"><a href="?categoryId=' . $category->category_id . '">' . $category->name . '</a></li>';
+                echo '<li class="cate ' . $class . '" data-id="'.$category->category_id.'"><a href="?categoryId=' . $category->category_id . '">' . $category->cate_name . '</a></li>';
             } ?>
         </ul>
     </div>
     <ul class="blog-list">
         <?php
         foreach ($blogs as $blog) {
-            echo '<li class="blog"><a href="#"><img src="' . $blog->img_url . '"alt=""></a></li>';
+            echo '<li class="blog"><a href="welcome/view_blog?blogId='.$blog->blog_id.'"><img src="' . $blog->img_url . '"alt=""></a></li>';
         }
         ?>
     </ul>
-    <button id="leftLoad">></button>
+    <button id="leftLoad"><</button>
     <button id="loadImg">></button>
 </div>
 <script src="/js/require-2.1.11.js" data-main="/js/main.js"></script>

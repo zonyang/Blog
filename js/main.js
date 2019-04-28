@@ -1,4 +1,4 @@
-require(["jquery", "search"], function ($) {
+require(["jquery", "search","comment"], function ($) {
 
     $(function () {
         let pageIndex = 0;

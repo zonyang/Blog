@@ -23,38 +23,49 @@ class Welcome extends CI_Controller
     {
         parent::__construct();
         $this->load->model("blog_category_model");
+        $this->load->library('session');
     }
 
     public function index()
     {
-//        $this->load->model('blog_category_model');
         $categories = $this->blog_category_model->get_category();
-
-
         $cateId = $this->input->get('categoryId');
         if (!$cateId) {
-            $blogs = $this->blog_category_model->get_blog(0);
+            $blogs = $this->blog_category_model->get_blogs(0);
         } else {
             $blogs = $this->blog_category_model->get_blog_by_category($cateId, 0);
-//            var_dump($blogs);
         }
+//            var_dump(  $this->session->user);
         $this->load->view('index', array(
             'categories' => $categories,
-            'blogs' => $blogs
+            'blogs' => $blogs,
+            'user' => $this->session->user?$this->session->user:''
         ));
     }
+
 
     public function load_img()
     {
         $cate_id = $this->input->get('cateId');
         $page_index = $this->input->get('pageIndex');
         if (!$cate_id) {
-            $blogs = $this->blog_category_model->get_blog($page_index);
+            $blogs = $this->blog_category_model->get_blogs($page_index);
         } else {
             $blogs = $this->blog_category_model->get_blog_by_category($cate_id, $page_index);
 //            var_dump($blogs);
         }
-       echo json_encode( $blogs);
+        echo json_encode($blogs);
 //        var_dump($blogs);
+    }
+
+    public function view_blog()
+    {
+        $blog_id = $this->input->get('blogId');
+        $blogs = $this->blog_category_model->get_blog_and_category($blog_id);
+        $blogs->comments = $this->blog_category_model->get_comments($blog_id);
+        $this->load->view('comment', array(
+            'blogs' => $blogs,
+            'user' => $this->session->user?$this->session->user:''
+        ));
     }
 }
