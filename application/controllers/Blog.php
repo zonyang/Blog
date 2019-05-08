@@ -7,12 +7,14 @@
  * Time: 下午 7:34
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Blog extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->load->model("blog_category_model");
+        $this->load->model("user_model");
         $this->load->library('session');
     }
 
@@ -22,12 +24,14 @@ class Blog extends CI_Controller
         $content = $this->input->post('content');
         $blog_id = $this->input->post('blogId');
         $time = $this->input->post('time');
-        echo $user_id;
         $col = $this->blog_category_model->commit_comment($blog_id,
             $time, $user_id, $content);
-        if($col) {
-            echo "success";
-        }else {
+        if ($col) {
+            $user = $this->user_model->getUser($user_id);
+            $comments = count($this->blog_category_model->get_comments($blog_id));
+            $li = array('comments'=> $comments,'name'=>$user[0]->user_name);
+            echo json_encode($li);
+        } else {
             echo "fail";
         }
     }

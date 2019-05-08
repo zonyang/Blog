@@ -20,8 +20,8 @@
     <h3><?php echo $blogs->blog_name ?></h3>
     <img src="<?php echo $blogs->img_url ?>" alt="">
     <p><?php echo '<li>' . $blogs->content . '</li>' ?></p>
-    <ul class="comments">
-        <h3><?php echo count($blogs->comments) ?>Responses</h3>
+    <h3 id="response"><?php echo count($blogs->comments) ?>Responses</h3>
+    <ul class="comments" id="comments">
         <?php foreach ($blogs->comments as $comment){?>
             <li class="comment">
                 <span><?php echo $comment->user_name ?></span>
@@ -29,12 +29,12 @@
                 <p><?php echo $comment->content ?></p>
             </li>
         <?php } ?>
-        <h3>leave a comment</h3>
-        <input class="userId" type="hidden" value=<?php echo $user_id?>>
-        <input class="blogId" type="hidden" value=<?php echo $blogs->blog_id?>>
-        <textarea name="content" id="textCom" cols="30" rows="10"></textarea><br>
-        <input type="button" id="subCom" value="发表">
     </ul>
+    <h3>leave a comment</h3>
+    <input class="userId" type="hidden" value=<?php echo $user_id?>>
+    <input class="blogId" type="hidden" value=<?php echo $blogs->blog_id?>>
+    <textarea name="content" id="textCom" cols="30" rows="10"></textarea><br>
+    <input type="button" id="subCom" value="发表">
 </div>
 <script src="/js/require-2.1.11.js" data-main="/js/main.js"></script>
 <script>

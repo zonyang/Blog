@@ -28,7 +28,7 @@ class User extends CI_Controller
         $pwd = $this->input->post('pwd');
         $ret = $this->user_model->checkUser($name, $pwd);
         if ($ret) {
-            $this->session->user=$ret;
+            $this->session->user = $ret;
             redirect('/welcome');
         } else {
             $this->load->view('login');
@@ -38,6 +38,35 @@ class User extends CI_Controller
     public function reg()
     {
         $this->load->view('reg');
+    }
+
+    public function logout()
+    {
+        $this->session->user = '';
+        redirect('/welcome');
+    }
+
+    public function checkReg()
+    {
+        $name = $this->input->post('name');
+        $pwd = $this->input->post('pwd');
+        $ret = $this->user_model->register($name, $pwd);
+        if ($ret) {
+            redirect('/welcome');
+        } else {
+            $this->load->view('reg');
+        }
+    }
+
+    public function checkUserName()
+    {
+        $name = $this->input->get('name');
+        $ret = $this->user_model->checkUserName($name);
+        if ($ret) {
+            echo 'fail';
+        } else {
+            echo 'ok';
+        }
     }
 }
 
